@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FFF9D6;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 30px;
+    color: #3F3F46;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #8EA66B;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #6B6B6B;
+}
+
+.planner-card,
+.tasks-section,
+.progress-section {
+    background-color: #FFFFFF;
+    padding: 25px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(63, 63, 70, 0.10);
+}
+
+h2 {
+    color: #D8A2A2;
+    margin-top: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555555;
+}
+
+input,
+select {
+    padding: 12px;
+    border: 1px solid #D8A2A2;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #FFFDF5;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #8EA66B;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #D8A2A2;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #C98F8F;
+}
+
+.empty-message {
+    text-align: center;
+    color: #777777;
+}
+
+.task-card {
+    background-color: white;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-card h3 {
+    margin: 0;
+    color: #0F766E;
+}
+
+.task-card p {
+    margin: 5px 0 0;
+    color: #334155;
+}
+
+.complete-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #0F766E;
+    color: white;
+    cursor: pointer;
+}
+
+.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.delete-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #dc2626;
+    color: white;
+    cursor: pointer;
+    margin-left: 8px;
+}

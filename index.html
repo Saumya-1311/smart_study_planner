@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Study Planner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📚 Smart Study Planner</h1>
+
+        <p class="subtitle">
+            Plan your study. Track your progress.
+        </p>
+
+        <section class="planner-card">
+
+            <h2>Add Study Task</h2>
+
+            <form id="taskForm">
+
+                <label for="task">Task</label>
+                <input
+                    type="text"
+                    id="task"
+                    placeholder="Enter your study task"
+                    required
+                >
+
+                <label for="subject">Subject</label>
+                <select id="subject">
+                    <option value="Java">Java</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="DSA">DSA</option>
+                    <option value="Database">Database</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="date">Date</label>
+                <input type="date" id="date" required>
+
+                <label for="priority">Priority</label>
+                <select id="priority">
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+
+                <button type="submit">+ Add Task</button>
+
+            </form>
+
+        </section>
+
+
+        <section class="tasks-section">
+
+            <h2>📋 My Study Tasks</h2>
+
+            <div id="taskList"></div>
+
+        </section>
+
+
+        <section class="progress-section">
+
+            <h2>📊 Progress</h2>
+
+            <p id="progress">
+                0 completed / 0 tasks
+            </p>
+
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
