@@ -1,125 +1,10 @@
-// const taskForm = document.getElementById("taskForm");
 
-// taskForm.addEventListener("submit", function(event) {
+let studyTasks = JSON.parse(localStorage.getItem("studyTasks")) || [];
 
-//     event.preventDefault();
+function saveTasks() {
+    localStorage.setItem("studyTasks", JSON.stringify(studyTasks));
+}
 
-//     const task = document.getElementById("task").value;
-//     const subject = document.getElementById("subject").value;
-//     const date = document.getElementById("date").value;
-//     const priority = document.getElementById("priority").value;
-
-//     console.log("Task:", task);
-//     console.log("Subject:", subject);
-//     console.log("Date:", date);
-//     console.log("Priority:", priority);
-
-// });
-
-//2nd time
-// const taskForm = document.getElementById("taskForm");
-
-// taskForm.addEventListener("submit", function(event) {
-
-//     event.preventDefault();
-
-//     const task = document.getElementById("task").value;
-//     const subject = document.getElementById("subject").value;
-//     const date = document.getElementById("date").value;
-//     const priority = document.getElementById("priority").value;
-
-//     const studyTask = {
-//         task: task,
-//         subject: subject,
-//         date: date,
-//         priority: priority,
-//         completed: false
-//     };
-
-//     console.log(studyTask);
-//     displayTask(studyTask);
-
-// });
-
-// function displayTask(studyTask) {
-
-//     const taskList = document.getElementById("taskList");
-    
-
-//     console.log("Task list found:", taskList);
-
-//     const taskCard = document.createElement("div");
-//     taskCard.className = "task-card";
-
-//     taskCard.innerHTML = `
-//         <h3>${studyTask.task}</h3>
-//         <p>Subject: ${studyTask.subject}</p>
-//         <p>Date: ${studyTask.date}</p>
-//         <p>Priority: ${studyTask.priority}</p>
-//     `;
-
-//     // 3️⃣ Complete button
-//     const completeButton = document.createElement("button");
-//     completeButton.textContent = "Complete";
-//     completeButton.className = "complete-btn";
-
-//     completeButton.addEventListener("click", function() {
-//         taskCard.classList.toggle("completed");
-//         updateProgress();
-//     });
-
-//     taskCard.appendChild(completeButton);
-
-//     // 5️⃣ Delete button
-//     const deleteButton = document.createElement("button");
-//     deleteButton.textContent = "Delete";
-//     deleteButton.className = "delete-btn";
-
-//     deleteButton.addEventListener("click", function() {
-//     taskCard.remove();
-//     updateProgress();
-//     showEmptyMessage();
-
-// });
-
-//     taskCard.appendChild(deleteButton);
-//     taskList.appendChild(taskCard);
-
-//     // 3️⃣ Update progress after adding task
-//     updateProgress();
-// }
-
-// function updateProgress() {
-
-//     const taskCards = document.querySelectorAll(".task-card");
-//     const completedTasks = document.querySelectorAll(".task-card.completed");
-
-//     const totalTasks = taskCards.length;
-//     const completedCount = completedTasks.length;
-
-//     document.getElementById("progress").textContent =
-//         `${completedCount} completed / ${totalTasks} tasks`;
-// }
-
-
-// function showEmptyMessage() {
-
-//     const taskList = document.getElementById("taskList");
-
-//     if (taskList.children.length === 0) {
-//         taskList.innerHTML = `
-//             <p class="empty-message">
-//                 No tasks yet. Add your first study task!
-//             </p>
-//         `;
-//     }
-// }
-
-// showEmptyMessage();
-
-
-
-//3rd time
 const taskForm = document.getElementById("taskForm");
 
 taskForm.addEventListener("submit", function(event) {
@@ -132,14 +17,17 @@ taskForm.addEventListener("submit", function(event) {
     const priority = document.getElementById("priority").value;
 
     const studyTask = {
-        task: task,
-        subject: subject,
-        date: date,
-        priority: priority,
-        completed: false
-    };
+    id: Date.now(),
+    task,
+    subject,
+    date,
+    priority,
+    completed: false
+};
 
-    console.log(studyTask);
+studyTasks.push(studyTask);
+saveTasks();
+
 
     displayTask(studyTask);
 
@@ -151,62 +39,68 @@ function displayTask(studyTask) {
 
     const taskList = document.getElementById("taskList");
 
-    console.log("Task list found:", taskList);
-
     const taskCard = document.createElement("div");
 
     taskCard.className = "task-card";
 
     taskCard.innerHTML = `
+    <div class="task-info">
         <h3>${studyTask.task}</h3>
         <p>Subject: ${studyTask.subject}</p>
         <p>Date: ${studyTask.date}</p>
-        <p>Priority: ${studyTask.priority}</p>
-    `;
+        <p class="priority">Priority: ${studyTask.priority}</p>
+    </div>
+`;
 
 
     // Complete button
     const completeButton = document.createElement("button");
-
     completeButton.textContent = "Complete";
-
     completeButton.className = "complete-btn";
 
     completeButton.addEventListener("click", function() {
+    taskCard.classList.toggle("completed");
 
-        taskCard.classList.toggle("completed");
+    const taskIndex = studyTasks.findIndex(task => task.id === studyTask.id);
 
-        updateProgress();
+    studyTasks[taskIndex].completed = !studyTasks[taskIndex].completed;
 
-    });
+    saveTasks();
+    updateProgress();
+});
 
-    taskCard.appendChild(completeButton);
 
 
     // Delete button
     const deleteButton = document.createElement("button");
-
     deleteButton.textContent = "Delete";
-
     deleteButton.className = "delete-btn";
 
     deleteButton.addEventListener("click", function() {
+    studyTasks = studyTasks.filter(task => task.id !== studyTask.id);
 
-        taskCard.remove();
+    saveTasks();
+    taskCard.remove();
+    updateProgress();
+    showEmptyMessage();
+});
 
-        updateProgress();
+    // Group buttons together
+    const taskActions = document.createElement("div");
+    taskActions.className = "task-actions";
+    
+    taskActions.appendChild(completeButton);
+    taskActions.appendChild(deleteButton);
+    
+    taskCard.appendChild(taskActions);
 
-        showEmptyMessage();
 
-    });
-
-    taskCard.appendChild(deleteButton);
-
+    if (studyTask.completed) {
+    taskCard.classList.add("completed");
+    }
 
     taskList.appendChild(taskCard);
-
     updateProgress();
-
     showEmptyMessage();
 
 }
@@ -269,4 +163,34 @@ function showEmptyMessage() {
 }
 
 
+studyTasks.forEach(displayTask);
+updateProgress();
 showEmptyMessage();
+
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+filterButtons.forEach(button => {
+    button.addEventListener("click", function() {
+        const filter = button.dataset.filter;
+
+        filterButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        const taskCards = document.querySelectorAll(".task-card");
+
+        taskCards.forEach(card => {
+            const isCompleted = card.classList.contains("completed");
+
+            if (filter === "all") {
+                card.style.display = "flex";
+            } else if (filter === "pending") {
+                card.style.display = isCompleted ? "none" : "flex";
+            } else if (filter === "completed") {
+                card.style.display = isCompleted ? "flex" : "none";
+            }
+        });
+    });
+});
